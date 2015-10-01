@@ -18,8 +18,8 @@ post "/link" do
   content_type :json
 
   if params[:password] == CONFIG["settings"]["password"]
-    page = MetaInspector.new("#{params[:url]}")
-    Link.insert({title: page.best_title, image_url: page.images.best, description: page.description, url: page.url})
+    page = MetaInspector.new("#{params[:url]}", :headers => {'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'})
+    Link.insert({title: page.title, image_url: page.images.best, description: page.description, url: page.url})
   end
 end
 
