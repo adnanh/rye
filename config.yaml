@@ -1,0 +1,5 @@
+database:
+  connection_string: sqlite://db/links.db
+settings:
+  links_per_page: 20
+  password: secret

@@ -1,0 +1,5 @@
+count: <%= total %>
+
+<% links.each do |link| %>
+    <%= erb :link, locals: {link: link} %>
+<% end %>
