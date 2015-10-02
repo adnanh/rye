@@ -1,8 +1,7 @@
 require "yaml"
 require "sequel"
-require "tilt/erubis"
 
-CONFIG = YAML.load_file("config.yaml")
+CONFIG = YAML.load_file("config.yml")
 
 DB = Sequel.connect(CONFIG["database"]["connection_string"])
 

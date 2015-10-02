@@ -1,6 +1,7 @@
 require "sinatra"
-require "metainspector"
+require "tilt/erubis"
 require_relative "init"
+require_relative "workers/crawler"
 
 get "/" do
   page = 1
@@ -18,9 +19,11 @@ post "/link" do
   content_type :json
 
   if params[:password] == CONFIG["settings"]["password"]
-    page = MetaInspector.new("#{params[:url]}", :headers => {'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'})
-    Link.insert({title: page.title, image_url: page.images.best, description: page.description, url: page.url})
+    id = Link.insert({url: params[:url]})
+    Crawler.perform_async(id, params[:url])
   end
+
+  redirect "/"
 end
 
 get "/delete/:id" do

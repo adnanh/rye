@@ -1,5 +1,8 @@
 database:
   connection_string: sqlite://db/links.db
+redis:
+  host: 127.0.0.1
+  port: 6379
 settings:
   links_per_page: 20
   password: secret

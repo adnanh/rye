@@ -1,5 +1,7 @@
-count: <%= total %>
+<header id="header"><%= total %> links</header>
 
+<div id="links">
 <% links.each do |link| %>
     <%= erb :link, locals: {link: link} %>
 <% end %>
+</div>
