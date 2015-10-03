@@ -11,7 +11,7 @@ get "/" do
   links_per_page = CONFIG["settings"]["links_per_page"]
   offset = (page-1) * links_per_page
 
-  links = Link.limit(links_per_page, offset)
+  links = Link.order(Sequel.desc(:id)).limit(links_per_page, offset)
 
   total = Link.count
 
