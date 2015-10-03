@@ -5,17 +5,18 @@ require_relative "init"
 require_relative "workers/crawler"
 
 get "/" do
-  page = 1
-  page = [1, params[:page].to_i].max if params.key? "page"
-
+  total = Link.count
   links_per_page = CONFIG["settings"]["links_per_page"]
+  page_count = (total.to_f/links_per_page).ceil
+  
+  page = 1
+  page = [[1, params[:page].to_i].max, page_count].min if params.key? "page"
+
   offset = (page-1) * links_per_page
 
   links = Link.order(Sequel.desc(:id)).limit(links_per_page, offset)
 
-  total = Link.count
-
-  erb :index, locals: {links: links, total: total, page: page, page_count: (total.to_f/links_per_page).ceil}
+  erb :index, locals: {links: links, total: total, page: page, page_count: page_count}
 end
 
 get "/link/new" do
