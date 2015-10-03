@@ -1,5 +1,6 @@
 require "sinatra"
 require "tilt/erubis"
+require "uri"
 require_relative "init"
 require_relative "workers/crawler"
 
@@ -15,12 +16,22 @@ get "/" do
   erb :index, locals: {links: links, total: Link.count, page: page}
 end
 
-post "/link" do
-  content_type :json
+get "/link/new" do
+  erb :new_link
+end
 
+post "/link" do
   if params[:password] == CONFIG["settings"]["password"]
-    id = Link.insert({url: params[:url]})
-    Crawler.perform_async(id, params[:url])
+    begin
+      url = URI.parse(params[:url])
+      url_string = url.to_s
+
+      now = Time.now
+      id = Link.insert({url: url_string, content_type: "parsing", created_at: now, updated_at: now})
+      
+      Crawler.perform_async(id, url_string)
+    rescue URI::InvalidURIError
+    end
   end
 
   redirect "/"

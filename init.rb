@@ -12,6 +12,9 @@ unless DB.table_exists?(:links)
     column :title, :text
     column :description, :text
     String :image_url
+    String :content_type
+    DateTime :created_at
+    DateTime :updated_at
   end
 end
 

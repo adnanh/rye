@@ -1,5 +1,6 @@
 database:
   connection_string: sqlite://db/links.db
 settings:
+  name: Cool visualizations
   links_per_page: 20
   password: secret

@@ -1,0 +1,21 @@
+ <div class="row">
+	<div class="col s12">
+	  <div class="card z-depth-3">
+	    <a target="_blank" href="<%== link[:url] %>" class="white-text"><div class="card-image white" style="background-image: url('<%== link[:image_url] %>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover; min-height: 150px; max-height: 500px;">
+	    </div>
+	    <div class="card-content red darken-4 white-text z-depth-1">
+	    	<h5><b><%== link[:title] %></b></h5>
+	    </div></a>
+	    <div class="card-content">
+	      <p><%== link[:description] %></p>
+	    </div>
+	    <div class="card-action left-align">
+	      <span><%== link[:created_at].strftime("%d/%m/%Y, %l:%M %p") %></span>
+	      <a href="/delete/<%== link[:id] %>" class="red-text"><i class="material-icons right">delete</i></a>
+	    </div>
+	  </div>
+	</div>
+</div>
