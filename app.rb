@@ -13,7 +13,9 @@ get "/" do
 
   links = Link.limit(links_per_page, offset)
 
-  erb :index, locals: {links: links, total: Link.count, page: page}
+  total = Link.count
+
+  erb :index, locals: {links: links, total: total, page: page, page_count: (total.to_f/links_per_page).ceil}
 end
 
 get "/link/new" do

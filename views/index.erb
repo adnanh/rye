@@ -1,11 +1,17 @@
 <div id="links">
-<% links.each do |link| %>
-	<% if link[:content_type] == "parsing" %>
-	  <%= erb :link_parsing, locals: {link: link} %>
- 	<% elsif link[:content_type].start_with?("text") %>
-      <%= erb :link_page, locals: {link: link} %>
-  	<% elsif link[:content_type].start_with?("image") %>
-      <%= erb :link_image, locals: {link: link} %>
- 	<% end %>
-<% end %>
+	<% if links.empty? %>
+		<%= erb :no_links %>
+	<% else %>
+		<%= erb :pagination, locals: {total: total, page: page, page_count: page_count} %>
+		<% links.each do |link| %>
+			<% if link[:content_type] == "parsing" %>
+				<%= erb :link_parsing, locals: {link: link} %>
+			<% elsif link[:content_type].start_with?("text") %>
+				<%= erb :link_page, locals: {link: link} %>
+			<% elsif link[:content_type].start_with?("image") %>
+				<%= erb :link_image, locals: {link: link} %>
+			<% end %>
+		<% end %>
+		<%= erb :pagination, locals: {total: total, page: page, page_count: page_count} %>
+	<% end %>
 </div>

@@ -14,9 +14,9 @@ class Crawler
     	faraday_options: { ssl: { verify: false } })
 
     if page.content_type.start_with?("text")
-		dataset.update({title: page.title, image_url: page.images.best, description: page.description, content_type: page.content_type, updated_at: Time.now})
-	elsif page.content_type.start_with?("image")
-		dataset.update({title: "Image", image_url: url, content_type: page.content_type, updated_at: Time.now})		
-	end
+      dataset.update({title: page.title, image_url: page.images.best, description: page.description, content_type: page.content_type, updated_at: Time.now})
+    elsif page.content_type.start_with?("image")
+      dataset.update({title: "Image", image_url: url, content_type: page.content_type, updated_at: Time.now})		
+    end
   end
 end

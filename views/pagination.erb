@@ -1,0 +1,23 @@
+<div class="row">
+	<div class="col s12 center-align">
+		<ul class="pagination">
+			<% if page == 1 %>
+			<li class="gray-text text-darken-4"><a href="" onclick="return false;"><i class="material-icons left">chevron_left</i> Previous</a></li>
+			<% else %>
+			<li><a class="white-text" href="/?page=<%== (page-1) %>"><i class="material-icons left">chevron_left</i> Previous</a></li>
+			<% end %>
+			<%
+			for i in 1..page_count
+				%>
+				<li class="<%= "red active" if i == page %>"><a class="white-text " href="/?page=<%== i %>"><%== i %></a></li>
+				<%
+			end
+			%>
+			<% if page == page_count %>
+			<li class="gray-text text-darken-4"><a href="" onclick="return false;"><i class="material-icons right">chevron_right</i> Next</a></li>
+			<% else %>
+			<li><a class="white-text" href="/?page=<%== (page+1) %>"><i class="material-icons right">chevron_right</i> Next</a></li>
+			<% end %>
+		</ul>
+	</div>
+</div>
