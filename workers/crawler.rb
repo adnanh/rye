@@ -1,5 +1,6 @@
 require "sidekiq"
 require "metainspector"
+require "http"
 
 class Crawler
   include Sidekiq::Worker
@@ -15,8 +16,14 @@ class Crawler
 
     if page.content_type.start_with?("text")
       dataset.update({title: page.title, image_url: page.images.best, description: page.description, content_type: page.content_type, updated_at: Time.now})
+      if CONFIG.key? "pinterest"
+        HTTP.post "https://api.pinterest.com/v1/pins/", params: { access_token: CONFIG["pinterest"]["token"] }, form: { board: CONFIG["pinterest"]["board_id"], note: "#{page.title} #{page.description}", link: url, image_url: page.images.best }
+      end
     elsif page.content_type.start_with?("image")
       dataset.update({title: "Image", image_url: url, content_type: page.content_type, updated_at: Time.now})		
+      if CONFIG.key? "pinterest"
+        HTTP.post "https://api.pinterest.com/v1/pins/", params: { access_token: CONFIG["pinterest"]["token"] }, form: { board: CONFIG["pinterest"]["board_id"], note: "Image", link: url, image_url: url }
+      end
     end
   end
 end
